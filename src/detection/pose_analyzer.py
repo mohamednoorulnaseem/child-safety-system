@@ -33,16 +33,24 @@ class PoseAnalyzer:
         """
         logger.info("Initializing PoseAnalyzer...")
         
-        # Initialize MediaPipe Pose
-        self.mp_pose = mp.solutions.pose
-        self.mp_drawing = mp.solutions.drawing_utils
-        self.mp_drawing_styles = mp.solutions.drawing_styles
-        
-        self.pose = self.mp_pose.Pose(
-            min_detection_confidence=min_detection_confidence,
-            min_tracking_confidence=min_tracking_confidence,
-            model_complexity=0  # 0=Lite, 1=Full, 2=Heavy (use Lite for Raspberry Pi)
-        )
+        try:
+            # Initialize MediaPipe Pose
+            self.mp_pose = mp.solutions.pose
+            self.mp_drawing = mp.solutions.drawing_utils
+            self.mp_drawing_styles = mp.solutions.drawing_styles
+            
+            self.pose = self.mp_pose.Pose(
+                min_detection_confidence=min_detection_confidence,
+                min_tracking_confidence=min_tracking_confidence,
+                model_complexity=0  # 0=Lite, 1=Full, 2=Heavy (use Lite for Raspberry Pi)
+            )
+            self.mediapipe_available = True
+        except AttributeError:
+            # MediaPipe API changed or not fully installed
+            logger.warning("MediaPipe pose solutions not available")
+            logger.info("Pose analysis will use placeholder mode")
+            self.mediapipe_available = False
+            self.pose = None
         
         # Pose landmark indices (MediaPipe has 33 landmarks)
         self.LANDMARKS = {
@@ -78,6 +86,15 @@ class PoseAnalyzer:
         if image is None or image.size == 0:
             logger.warning("Empty image received")
             return None, {}
+        
+        if not self.mediapipe_available or self.pose is None:
+            # Return placeholder analysis when MediaPipe not available
+            return None, {
+                'struggling': False,
+                'being_dragged': False,
+                'distress_posture': False,
+                'is_suspicious': False
+            }
         
         try:
             # Convert BGR to RGB

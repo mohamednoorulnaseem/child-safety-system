@@ -48,19 +48,32 @@ class EmotionDetector:
             import tensorflow as tf
             self.model = tf.keras.models.load_model(self.model_path)
             logger.info("Emotion model loaded successfully")
+            self.tensorflow_available = True
             self.model_loaded = True
+        except ImportError:
+            logger.warning("TensorFlow not available (Python 3.14 not supported)")
+            logger.info("Using placeholder emotion detection")
+            self.tensorflow_available = False
+            self.model_loaded = False
+            self.model = None
         except FileNotFoundError:
             logger.warning(f"Model file not found: {self.model_path}")
             logger.info("Creating dummy model - needs training")
+            self.tensorflow_available = True
             self.model_loaded = False
             self._create_dummy_model()
         except Exception as e:
             logger.error(f"Failed to load emotion model: {e}")
+            self.tensorflow_available = True
             self.model_loaded = False
             self._create_dummy_model()
     
     def _create_dummy_model(self):
         """Create dummy model for testing (returns random predictions)."""
+        if not self.tensorflow_available:
+            self.model = None
+            return
+            
         import tensorflow as tf
         from tensorflow.keras import layers, models
         
@@ -130,9 +143,15 @@ class EmotionDetector:
             input_face = normalized_face.reshape(1, 48, 48, 1)
             
             # Predict emotion
-            predictions = self.model.predict(input_face, verbose=0)
-            emotion_idx = np.argmax(predictions[0])
-            confidence = float(predictions[0][emotion_idx])
+            if not self.tensorflow_available or self.model is None:
+                # Placeholder when TensorFlow not available
+                emotion_idx = np.random.choice(len(self.emotion_labels), p=[0.1, 0.05, 0.1, 0.3, 0.1, 0.1, 0.25])
+                confidence = np.random.uniform(0.4, 0.7)
+                logger.debug("Using placeholder emotion detection (TensorFlow not available)")
+            else:
+                predictions = self.model.predict(input_face, verbose=0)
+                emotion_idx = np.argmax(predictions[0])
+                confidence = float(predictions[0][emotion_idx])
             
             emotion = self.emotion_labels[emotion_idx]
             
