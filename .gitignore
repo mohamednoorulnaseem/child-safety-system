@@ -21,11 +21,21 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.mypy_cache/
+.pytest_cache/
 
 # Virtual Environment
 venv/
 ENV/
 env/
+
+# Flutter/Dart
+mobile_app/.dart_tool/
+mobile_app/.flutter-plugins
+mobile_app/.flutter-plugins-dependencies
+mobile_app/.packages
+mobile_app/build/
+mobile_app/pubspec.lock
 
 # IDEs
 .vscode/
