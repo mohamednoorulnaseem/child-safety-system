@@ -1,0 +1,6 @@
+# Placeholder for models directory
+# Place your trained models here:
+# - yolov8n.pt (YOLOv8 nano model)
+# - age_classifier.pth (Age classification model)
+# - emotion_model.h5 (Emotion detection model)
+# - facenet_model.pth (Face recognition model)
