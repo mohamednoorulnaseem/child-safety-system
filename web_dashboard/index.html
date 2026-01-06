@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Child Safety System - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>🛡️ Child Safety System</h1>
+            <div class="header-right">
+                <span id="currentTime"></span>
+                <button class="btn-refresh" onclick="refreshAll()">
+                    <span>🔄</span> Refresh
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card critical">
+                <div class="stat-icon">🚨</div>
+                <div class="stat-content">
+                    <h3 id="criticalCount">0</h3>
+                    <p>Critical Alerts</p>
+                </div>
+            </div>
+            <div class="stat-card high">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-content">
+                    <h3 id="highCount">0</h3>
+                    <p>High Priority</p>
+                </div>
+            </div>
+            <div class="stat-card medium">
+                <div class="stat-icon">📢</div>
+                <div class="stat-content">
+                    <h3 id="mediumCount">0</h3>
+                    <p>Medium Priority</p>
+                </div>
+            </div>
+            <div class="stat-card info">
+                <div class="stat-icon">📹</div>
+                <div class="stat-content">
+                    <h3 id="camerasOnline">0</h3>
+                    <p>Cameras Online</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="charts-row">
+            <div class="chart-card">
+                <h2>Alerts by Priority</h2>
+                <canvas id="priorityChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h2>Alerts Timeline (Last 24h)</h2>
+                <canvas id="timelineChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Camera Status -->
+        <div class="section-card">
+            <h2>📹 Camera Status</h2>
+            <div id="cameraList" class="camera-grid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Recent Alerts -->
+        <div class="section-card">
+            <h2>🔔 Recent Alerts</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterAlerts('all')">All</button>
+                <button class="filter-btn" onclick="filterAlerts('critical')">Critical</button>
+                <button class="filter-btn" onclick="filterAlerts('high')">High</button>
+                <button class="filter-btn" onclick="filterAlerts('medium')">Medium</button>
+            </div>
+            <div class="table-container">
+                <table id="alertsTable">
+                    <thead>
+                        <tr>
+                            <th>Priority</th>
+                            <th>Message</th>
+                            <th>Camera</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alertsBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Child Safety System | Anand Institute of Higher Technology</p>
+            <p>Status: <span id="systemStatus" class="status-online">Online</span></p>
+        </div>
+    </footer>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

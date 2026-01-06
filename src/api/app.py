@@ -11,7 +11,7 @@ sys.path.append(str(Path(__file__).parent.parent.parent))
 
 from config.settings import API
 from src.utils.logger import setup_logger
-from .routes import api_bp
+from src.api.routes import api_bp
 
 logger = setup_logger('FlaskApp')
 
