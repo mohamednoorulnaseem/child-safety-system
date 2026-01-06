@@ -1,0 +1,71 @@
+name: child_safety_app
+description: Child Safety & Anti-Abduction System Mobile App for Security Guards
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # UI & Navigation
+  cupertino_icons: ^1.0.6
+  flutter_svg: ^2.0.9
+  
+  # State Management
+  provider: ^6.1.1
+  
+  # Networking
+  http: ^1.1.2
+  dio: ^5.4.0
+  
+  # Local Storage
+  shared_preferences: ^2.2.2
+  sqflite: ^2.3.2
+  
+  # Push Notifications
+  firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.9
+  flutter_local_notifications: ^16.3.0
+  
+  # Charts & Graphs
+  fl_chart: ^0.66.0
+  
+  # Date & Time
+  intl: ^0.18.1
+  timeago: ^3.6.0
+  
+  # Connectivity
+  connectivity_plus: ^5.0.2
+  
+  # Media
+  cached_network_image: ^3.3.1
+  image_picker: ^1.0.7
+  
+  # Authentication
+  local_auth: ^2.1.8
+  
+  # Utils
+  url_launcher: ^6.2.3
+  permission_handler: ^11.2.0
+  flutter_slidable: ^3.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/icons/
+  
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
